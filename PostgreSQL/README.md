@@ -46,7 +46,12 @@ First, download the operator manifest from its official GitHub repository to a l
     kubectl get pods -n cnpg-system --watch
     ```
 
-### 3\. Deploy the PostgreSQL Cluster
+### 3\. Change and apply the secrets(Do not forget to change the string data in the file with your password and username)
+```bash
+kubectl apply -f postgres-secrets.yml
+```
+
+### 4\. Deploy the PostgreSQL Cluster
 
 This command reads the `postgres-cluster.yaml` manifest and tells the operator to build your 3-node database cluster.
 
