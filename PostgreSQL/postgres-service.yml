@@ -1,12 +1,29 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-service
-  labels:
-    app: postgres
+  name: postgres-master-service
+  namespace: postgres-ns
 spec:
   type: ClusterIP
   ports:
-    - port: 5432
+    - targetPort: 5432
+      port: 5432
   selector:
     app: postgres
+    role: master
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-replica-service
+  namespace: postgres-ns
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 5432
+      port: 5432
+  selector:
+    app: postgres
+    role: replica

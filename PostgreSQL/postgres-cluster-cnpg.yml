@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ca-postgres-cluster
+  namespace: postgres-ns
+spec:
+  instances: 3
+  bootstrap:
+    initdb:
+      database: cadatabase
+      secret:
+        name: postgres-secret
+  storage:
+    size: 5Gi
