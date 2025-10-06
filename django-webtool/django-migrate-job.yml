@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrate-job
+  namespace: django-namespace
+spec:
+  template:
+    spec:
+      containers:
+      - name: django-migrations
+        image: mradulnatani/django-webtool:latest
+        command: ["python", "manage.py", "migrate"]
+        env:
+        - name: DATABASE_HOST
+          value: "ca-postgres-cluster-rw.postgres-ns.svc.cluster.local"
+        - name: DATABASE_NAME
+          value: "cadatabase"
+        - name: DATABASE_USER
+          value: "ca"
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: django-secrets
+              key: SECRET_KEY
+      restartPolicy: OnFailure
+
