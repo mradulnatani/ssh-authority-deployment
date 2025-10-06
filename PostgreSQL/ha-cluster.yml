@@ -1,0 +1,16 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-ha-cluster
+spec:
+  instances: 3
+  storage:
+    size: 5Gi
+  # Optional: Enable synchronous replication for zero data loss
+  # synchronous:
+  #   enabled: true
+  postgresql:
+    parameters:
+      max_wal_senders: "10"
+      max_replication_slots: "10"
+
